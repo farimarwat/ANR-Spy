@@ -66,3 +66,13 @@ override fun onCreate(savedInstanceState: Bundle?) {
         initGui()
     }
 ```
+
+### Builder Methods
+#### setSpyListener()
+Sets ANRSpyListener/callback methods
+
+#### setThrowException(true)
+Throws exception and close the app if true
+
+#### setTimeOut(5000)
+Time limit to detect ANR
