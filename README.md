@@ -13,6 +13,29 @@ Google recommends/suggests your app on play store. If your app raises too many A
 
 ## Usage
 
+### Implement:
+Step 1:
+```
+allprojects {
+	repositories {
+	...
+	maven { url 'https://jitpack.io' }
+	}
+}
+```
+
+Step 2:
+
+```
+implementation 'com.github.farimarwat:ANR-Spy:1.0'
+```
+
+Now Build anrSpyAgent and do start.
+
+#### Note: Sample app is included in the project
+1. To Test ANR press "Main button" on main activity
+2. To Test ANR in broadcast "Change Plan Mode"
+3. To Test ANR in service, press Service button in the project
 ```
 override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
