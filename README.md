@@ -14,20 +14,9 @@ Google recommends/suggests your app on play store. If your app raises too many A
 ## Usage
 
 ### Implement:
-Step 1:
-```
-allprojects {
-	repositories {
-	...
-	maven { url 'https://jitpack.io' }
-	}
-}
-```
-
-Step 2:
 
 ```
-implementation 'com.github.farimarwat:ANR-Spy:1.0'
+implementation 'io.github.farimarwat:anrspy:1.0'
 ```
 
 Now Build anrSpyAgent and do start.
