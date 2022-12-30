@@ -1,4 +1,4 @@
-package pk.farimarwat.AnrSpy
+package pk.farimarwat.anrspy.agent
  interface ANRSpyListener {
     fun onWait(ms:Long){}
     fun onAnrStackTrace(stackstrace:Array<StackTraceElement>){}

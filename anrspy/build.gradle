@@ -1,8 +1,32 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+    id 'signing'
 }
 
+ext {
+    PUBLISH_GROUP_ID = 'io.github.farimarwat'
+    PUBLISH_VERSION = '1.0'
+    PUBLISH_ARTIFACT_ID = 'anrspy'
+    PUBLISH_DESCRIPTION = 'An Android library to detect ANR is activities, broadcast receievers and services'
+    PUBLISH_URL = 'https://github.com/farimarwat/ANR-Spy'
+    PUBLISH_LICENSE_NAME = 'Apache 2.0 License'
+    PUBLISH_LICENSE_URL =
+            'https://www.apache.org/licenses/LICENSE-2.0'
+    PUBLISH_DEVELOPER_ID = 'farimarwat'
+    PUBLISH_DEVELOPER_NAME = 'Farman Ullah Marwat'
+    PUBLISH_DEVELOPER_EMAIL = 'farimarwat@gmail.com'
+    PUBLISH_SCM_CONNECTION =
+            'scm:git:github.com/farimarwat/ANR-Spy.git'
+    PUBLISH_SCM_DEVELOPER_CONNECTION =
+            'scm:git:ssh://github.com/farimarwat/ANR-Spy.git'
+    PUBLISH_SCM_URL =
+            'https://github.com/farimarwat/ANR-Spy/tree/master'
+}
+
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 android {
     namespace 'pk.farimarwat.anrspy'
     compileSdk 32
@@ -28,9 +52,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
 }
-
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -39,4 +61,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    //implementation 'io.github.farimarwat:anrspy:1.0'
 }

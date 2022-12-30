@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import pk.farimarwat.AnrSpy.TAG
+import pk.farimarwat.anrspy.agent.TAG
 
 class MyService:Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

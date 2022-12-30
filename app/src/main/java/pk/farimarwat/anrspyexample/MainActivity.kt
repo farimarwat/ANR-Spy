@@ -5,9 +5,9 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import pk.farimarwat.AnrSpy.ANRSpyAgent
-import pk.farimarwat.AnrSpy.ANRSpyListener
-import pk.farimarwat.AnrSpy.TAG
+import pk.farimarwat.anrspy.agent.ANRSpyAgent
+import pk.farimarwat.anrspy.agent.ANRSpyListener
+import pk.farimarwat.anrspy.agent.TAG
 
 import pk.farimarwat.anrspyexample.databinding.ActivityMainBinding
 
@@ -36,8 +36,9 @@ class MainActivity : AppCompatActivity() {
                     Log.e(TAG,"${stackTrace}")
                 }
             })
-            .setThrowException(true)
+            .setThrowException(false)
             .setTimeOut(5000)
+            .enablePerformanceMatrix(true)
             .build()
         anrSpyAgent.start()
         initGui()

@@ -1,4 +1,4 @@
-package pk.farimarwat.AnrSpy
+package pk.farimarwat.anrspy.agent
 
 import android.os.Looper
 import android.os.Message
