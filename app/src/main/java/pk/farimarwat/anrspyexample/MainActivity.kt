@@ -11,9 +11,13 @@ import kotlinx.coroutines.launch
 import pk.farimarwat.anrspy.agent.ANRSpyAgent
 import pk.farimarwat.anrspy.agent.ANRSpyListener
 import pk.farimarwat.anrspy.agent.TAG
+import pk.farimarwat.anrspy.annotations.TraceClass
+import pk.farimarwat.anrspy.annotations.TraceMethod
+import pk.farimarwat.anrspy.models.MethodModel
 
 import pk.farimarwat.anrspyexample.databinding.ActivityMainBinding
 
+@TraceClass(traceAllMethods = false)
 class MainActivity : AppCompatActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var mReceiver:AirPlanMode
@@ -30,6 +34,16 @@ class MainActivity : AppCompatActivity() {
                     //Log.e(TAG,"Waited: $ms")
                 }
 
+                override fun onReportAvailable(methodList: List<MethodModel>) {
+                    if(methodList.isNotEmpty()){
+                        Log.e(TAG,"Methods-------")
+                        for(item in methodList){
+                            Log.e(TAG,"Method: ${item.name} ElapsedTime: ${item.elapsedTime} Thread: ${item.thread.name}")
+                        }
+                        Log.e(TAG,"End Methods ----\n")
+                    }
+
+                }
                 override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
 
                 }
@@ -46,19 +60,14 @@ class MainActivity : AppCompatActivity() {
         initGui()
     }
     fun initGui(){
-        CoroutineScope(Dispatchers.IO).launch{
-            myLoop()
-        }
         binding.btnMain.setOnClickListener {
-            for(i in 1..10){
-                Log.e(TAG,"Number: $i")
-                Thread.sleep(1000)
-            }
+            myLoop()
         }
         binding.btnService.setOnClickListener {
             startService(Intent(this,MyService::class.java))
         }
     }
+    @TraceMethod
     fun myLoop(){
         for(i in 0..10){
             Thread.sleep(1000)
