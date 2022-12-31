@@ -3,10 +3,12 @@ package pk.farimarwat.anrspy.agent
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.MessageQueue.IdleHandler
 import android.util.Log
 import androidx.annotation.RequiresApi
-import java.util.*
+import pk.farimarwat.anrspy.models.MethodModel
 
+@RequiresApi(Build.VERSION_CODES.M)
 class ANRSpyAgent constructor(builder: Builder): Thread() {
 
     //Params
@@ -14,6 +16,11 @@ class ANRSpyAgent constructor(builder: Builder): Thread() {
     private var mShouldThrowException:Boolean = true
     private var TIME_OUT = 5000L
     private var mEnablePerformanceMatrix:Boolean = false
+    private var mListAnnotatedMedhods = mutableListOf<String>()
+    private var mListAnnotatedClasses = mutableListOf<String>()
+
+    private var mReportMethods = mutableListOf<MethodModel>()
+    private var mLiveThreads = mutableListOf<Thread>()
 
     //
 
@@ -23,12 +30,23 @@ class ANRSpyAgent constructor(builder: Builder): Thread() {
     private val _mTesterWorker = Runnable {
         _timeWaited = 0L
     }
+
+    private val mIdleHandler = object :IdleHandler{
+        override fun queueIdle(): Boolean {
+            mReportMethods = mutableListOf()
+            return true
+        }
+
+    }
     init {
         this.mListener = builder.getSpyListener()
         this.mShouldThrowException = builder.getThrowException()
         this.TIME_OUT = builder.getTimeOout()
         this.mEnablePerformanceMatrix = builder.getPerformanceMatrix()
-
+        mListAnnotatedMedhods.add("myLoop")
+        mListAnnotatedMedhods.add("initGui")
+        mListAnnotatedMedhods.add("onStartCommand")
+        Looper.getMainLooper().queue.addIdleHandler(mIdleHandler)
     }
     //Builder
     class Builder(){
@@ -86,14 +104,48 @@ class ANRSpyAgent constructor(builder: Builder): Thread() {
         for(entity in allstacktrace){
             val thread = entity.key
             if(thread.name == "main"){
-                Log.e(TAG,"[ ++ ANR Spy ++ ---- Start Performance Matrix ----]")
                 for(element in entity.value){
-                    Log.e(TAG,"ClassName: ${element.className} Method: ${element.methodName}")
+                    val methodexists = mListAnnotatedMedhods.find {
+                        element.methodName.lowercase().startsWith(it.lowercase())
+                    }
+                    if(methodexists != null){
+                        addMethod(methodexists,thread)
+                    }
                 }
-                Log.e(TAG,"[ ++ ANR Spy ++ ---- End Performance Matrix ----]")
-                Log.e(TAG,"\n")
             }
+            dumpMethods(mReportMethods)
         }
+    }
 
+    @Synchronized
+    fun addMethod(methodName:String, thread:Thread){
+        val exists = mReportMethods
+            .find {
+                (it.name.lowercase() == methodName.lowercase())
+        }
+        if(exists != null){
+            for(item in mReportMethods){
+                if(item.name.lowercase() == exists.name.lowercase()){
+                    item.elapsedTime += INTERVAL
+                    return
+                }
+            }
+        } else {
+            mReportMethods.add(
+                MethodModel(
+                    System.currentTimeMillis(),methodName,thread,0
+                )
+            )
+        }
+    }
+
+    fun dumpMethods(list:List<MethodModel>){
+       if(list.isNotEmpty()){
+           Log.e(TAG,"Methods-------")
+           for(item in list){
+               Log.e(TAG,"Method: ${item.name} ElapsedTime: ${item.elapsedTime} Thread: ${item.thread.name}")
+           }
+           Log.e(TAG,"End Methods ----\n")
+       }
     }
 }

@@ -5,6 +5,9 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pk.farimarwat.anrspy.agent.ANRSpyAgent
 import pk.farimarwat.anrspy.agent.ANRSpyListener
 import pk.farimarwat.anrspy.agent.TAG
@@ -28,12 +31,11 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
-                    Log.e(TAG,"Stack:\n ${stackstrace}")
+
                 }
 
                 override fun onAnrDetected(details: String, stackTrace: Array<StackTraceElement>) {
-                    Log.e(TAG,details)
-                    Log.e(TAG,"${stackTrace}")
+
                 }
             })
             .setThrowException(false)
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         initGui()
     }
     fun initGui(){
+        CoroutineScope(Dispatchers.IO).launch{
+            myLoop()
+        }
         binding.btnMain.setOnClickListener {
             for(i in 1..10){
                 Log.e(TAG,"Number: $i")
@@ -52,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnService.setOnClickListener {
             startService(Intent(this,MyService::class.java))
+        }
+    }
+    fun myLoop(){
+        for(i in 0..10){
+            Thread.sleep(1000)
         }
     }
 
