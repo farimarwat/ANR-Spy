@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "41890923590",
+    "project_id": "anrspyexample",
+    "storage_bucket": "anrspyexample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41890923590:android:5561ac5853b821af75b647",
+        "android_client_info": {
+          "package_name": "pk.farimarwat.anrspyexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41890923590-l3oqut6fss0rier0ia78aavf87af62sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANaxQEdM00PuyCvfHfepAECdRCN43hq4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41890923590-l3oqut6fss0rier0ia78aavf87af62sr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

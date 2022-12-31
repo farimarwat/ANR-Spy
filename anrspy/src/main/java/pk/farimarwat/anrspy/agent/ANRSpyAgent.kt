@@ -2,11 +2,16 @@ package pk.farimarwat.anrspy.agent
 
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.MessageQueue.IdleHandler
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pk.farimarwat.anrspy.annotations.TraceClass
 import pk.farimarwat.anrspy.annotations.TraceMethod
 import pk.farimarwat.anrspy.models.MethodModel
@@ -23,10 +28,8 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
     private var TIME_OUT = 5000L
     private var mEnablePerformanceMatrix: Boolean = false
     private var mListAnnotatedMedhods = mutableListOf<String>()
-    private var mListAnnotatedClasses = mutableListOf<String>()
-
     private var mReportMethods = mutableListOf<MethodModel>()
-    private var mLiveThreads = mutableListOf<Thread>()
+    private var mFirebaseInstance:FirebaseAnalytics? = null
 
     //
 
@@ -39,15 +42,25 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
 
     private val mIdleHandler = IdleHandler {
         mListener?.onReportAvailable(mReportMethods)
+        mFirebaseInstance?.let {
+            for(report in mReportMethods){
+                val bundle = Bundle()
+                bundle.putString("ANR_SPY_Method",report.name)
+                bundle.putString("ANR_SPY_Thread",report.thread.name)
+                bundle.putLong("ANR_SPY_Elapsed_Time",report.elapsedTime)
+                it.logEvent("ANR_SPY${report.name.uppercase()}",bundle)
+            }
+        }
         mReportMethods = mutableListOf()
+
         true
     }
-
     init {
         this.mListener = builder.getSpyListener()
         this.mShouldThrowException = builder.getThrowException()
         this.TIME_OUT = builder.getTimeOout()
         this.mEnablePerformanceMatrix = builder.getPerformanceMatrix()
+        this.mFirebaseInstance = builder.getFirebaseInstance()
         Looper.getMainLooper().queue.addIdleHandler(mIdleHandler)
     }
 
@@ -58,6 +71,7 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
         private var mShouldThrowException: Boolean = true
         private var TIME_OUT = 5000L
         private var mEnablePerformanceMatrix: Boolean = false
+        private var mFirebaseInstance:FirebaseAnalytics? = null
 
 
         //
@@ -74,6 +88,9 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
 
         fun enablePerformanceMatrix(enable: Boolean) = apply { mEnablePerformanceMatrix = enable }
         fun getPerformanceMatrix() = this.mEnablePerformanceMatrix
+
+        fun setFirebaseInstance(instance:FirebaseAnalytics?) = apply { this.mFirebaseInstance = instance }
+        fun getFirebaseInstance() = this.mFirebaseInstance
 
 
         fun build(): ANRSpyAgent = ANRSpyAgent(this)

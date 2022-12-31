@@ -5,6 +5,7 @@ import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val firebaseinstance = FirebaseAnalytics.getInstance(this)
         mReceiver = AirPlanMode()
         IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED).also {
             registerReceiver(mReceiver,it)
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             .setThrowException(false)
             .setTimeOut(5000)
             .enablePerformanceMatrix(true)
+            .setFirebaseInstance(firebaseinstance)
             .build()
         anrSpyAgent.start()
         initGui()
