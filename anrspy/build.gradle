@@ -7,9 +7,9 @@ plugins {
 
 ext {
     PUBLISH_GROUP_ID = 'io.github.farimarwat'
-    PUBLISH_VERSION = '1.0'
+    PUBLISH_VERSION = '1.1'
     PUBLISH_ARTIFACT_ID = 'anrspy'
-    PUBLISH_DESCRIPTION = 'An Android library to detect ANR is activities, broadcast receievers and services'
+    PUBLISH_DESCRIPTION = 'An Android library to detect ANR in activities, broadcast receievers and services'
     PUBLISH_URL = 'https://github.com/farimarwat/ANR-Spy'
     PUBLISH_LICENSE_NAME = 'Apache 2.0 License'
     PUBLISH_LICENSE_URL =
@@ -32,7 +32,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 21
+        minSdk 23
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -54,12 +54,9 @@ android {
     }
 }
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-    implementation 'org.reflections:reflections:0.10.2'
 }
