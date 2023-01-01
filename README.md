@@ -77,6 +77,31 @@ To get logs similar to the mention above on firebase.
 Just set the instance for firebase analytics and all events will be collected as usuall to other events.
 All the events will be prefixed with: ANR_SPY_  to differenciate from other events on firebase
 
+### Annotations
+In case if any one want to trace a specific method to trace then there are two types of annotations available:
+
+**1. @TraceClass(traceAllMethods = false)**
+This annotatiion is applied to a class and takes one perameter. If the peramater traceAllMethods is set to true then all methods of the class will be traced on main thread. Default is true
+**Note:** If **traceAllMethods** is set to **false** and there is no specific annotated method then there will be no report generated
+Example: To trace all methods in MainActivity:
+```
+@TraceClass(traceAllMethods = true)
+class MainActivity : AppCompatActivity() {
+	.......
+}
+```
+
+**2. @TraceMethod**
+To trace a specific method on main thread for ANR
+*Example: *
+```
+@TraceMethod
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+}
+```
+**Note:** If the method is not running on main thread then there will be no report generated
 
 ## Change Log
 **version 1.2 (beta)**
