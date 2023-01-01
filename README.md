@@ -82,7 +82,8 @@ Convert possible ANR to crash to figure out the line where ANR may be possible a
 **enableReportAnnotatedMethods(true)**
 
 This will generate report for annotated methods that you want to trace any where in the app. If the specified methods touches main thread for more than target time (default 5 secs), it will trigger **onReportAvailable** method of the callback to get details about the function e.g. Thread Name, Elapsed Time on main thread and function
-Note: If the annotated method is not running on main thread then there will  be no report generated. 
+
+**Note:** If the annotated method is not running on main thread then there will  be no report generated. 
 
 **setFirebaseInstance(firebaseinstance)**
 
@@ -95,8 +96,11 @@ In case if any one want to trace a specific method to trace then there are two t
 
 **1. @TraceClass(traceAllMethods = false)**
 This annotatiion is applied to a class and takes one perameter. If the peramater traceAllMethods is set to true then all methods of the class will be traced on main thread. Default is true
-**Note:** If **traceAllMethods** is set to **false** and there is no specific annotated method then there will be no report generated
-Example: To trace all methods in MainActivity:
+
+**Note:** If **traceAllMethods** is set to **false** and there is no specific annotated method then there will be no report generated.
+To trace all methods in MainActivity:
+
+*Example:*
 ```
 @TraceClass(traceAllMethods = true)
 class MainActivity : AppCompatActivity() {
@@ -106,7 +110,8 @@ class MainActivity : AppCompatActivity() {
 
 **2. @TraceMethod**
 To trace a specific method on main thread for ANR
-*Example: *
+
+*Example:*
 ```
 @TraceMethod
     override fun onCreate(savedInstanceState: Bundle?) {
