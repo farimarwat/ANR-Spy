@@ -125,7 +125,8 @@ To trace a specific method on main thread for ANR
 Initial release
 
 ## Support Me
-If you want to donate then you are welcome to buy me a cup of tea via **PATREON**
+If you want to donate then you are welcome to buy me a cup of tea via **PATREON** because this encourages me to give you more free stuff
+and continue to  maintain this library
 
-<a href="patreon.com/farimarwat">Buy Now!</a>
+<a href="https://patreon.com/farimarwat">Buy Now!</a>
 
