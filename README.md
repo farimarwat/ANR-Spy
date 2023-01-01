@@ -68,19 +68,24 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ### Builder Methods
 
 **setTimeOut(5000)**
+
 Time limit to detect ANR
 
 **setSpyListener()**
+
 Sets ANRSpyListener/callback methods
 
 **setThrowException(true)**
+
 Convert possible ANR to crash to figure out the line where ANR may be possible and close the app if true. Default is false
 
 **enableReportAnnotatedMethods(true)**
+
 This will generate report for annotated methods that you want to trace any where in the app. If the specified methods touches main thread for more than target time (default 5 secs), it will trigger **onReportAvailable** method of the callback to get details about the function e.g. Thread Name, Elapsed Time on main thread and function
 Note: If the annotated method is not running on main thread then there will  be no report generated. 
 
 **setFirebaseInstance(firebaseinstance)**
+
 To get logs similar to the mention above on firebase.
 Just set the instance for firebase analytics and all events will be collected as usuall to other events.
 All the events will be prefixed with: ANR_SPY_  to differenciate from other events on firebase
