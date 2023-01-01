@@ -54,7 +54,15 @@ val anrSpyAgent = ANRSpyAgent.Builder()
 ```
 ### Step 3: Start Tracing
 ```
-anrSpyAgent.start()
+override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+	.....
+	......
+	anrSpyAgent.start()
+	
+}
+
 ```
 
 ### Builder Methods
