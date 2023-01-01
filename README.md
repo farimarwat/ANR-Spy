@@ -11,57 +11,77 @@ Google recommends/suggests your app on play store. If your app raises too many A
 2. BroadCast = 10 sec
 3. Service = 20 sec
 
-## Usage
 
 ### Implement:
 
 ```
-implementation 'io.github.farimarwat:anrspy:1.0'
+implementation("io.github.farimarwat:anrspy:1.2")
 ```
+## Usage
 
-Now Build anrSpyAgent and do start.
-
-#### Note: Sample app is included in the project
-1. To Test ANR press "Main button" on main activity
-2. To Test ANR in broadcast "Change Plan Mode"
-3. To Test ANR in service, press Service button in the project
+### Step 1: Create a Callback Object
 ```
-override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        mReceiver = AirPlanMode()
-        IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED).also {
-            registerReceiver(mReceiver,it)
+ //Anr Callback
+    private var mCallback = object : ANRSpyListener {
+        override fun onWait(ms: Long) {
+		//Total blocking time of main thread. 
+		//Can be used for doing any action e.g. if blocked time is more than 5 seconds then restart the app to avoid raising ANR message because it will lead to down rank your app.
         }
-        val anrSpyAgent = ANRSpyAgent.Builder()
-            .setSpyListener(object : ANRSpyListener {
-                override fun onWait(ms: Long) {
-                    //Log.e(TAG,"Waited: $ms")
-                }
 
-                override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
-                    Log.e(TAG,"Stack:\n ${stackstrace}")
-                }
+        override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
+		//To  investigate ANR via stackstrace if occured.
+		//This method is deprecated and will  be removed in future
+        }
 
-                override fun onAnrDetected(details: String, stackTrace: Array<StackTraceElement>) {
-                    Log.e(TAG,details)
-                    Log.e(TAG,"${stackTrace}")
-                }
-            })
-            .setThrowException(true)
-            .setTimeOut(5000)
-            .build()
-        anrSpyAgent.start()
-        initGui()
+        override fun onReportAvailable(methodList: List<MethodModel>) {
+		//Get instant report about annotated methods if touches main thread more than target time
+        }
+        override fun onAnrDetected(details: String, stackTrace: Array<StackTraceElement>) {
+		// Is triggered when ANR is detected
+        }
     }
+```
+### Step 2: Create Instance
+```
+val anrSpyAgent = ANRSpyAgent.Builder()
+            .setTimeOut(5000)
+            .setSpyListener(mCallback)
+            .setThrowException(false)
+            .enableReportAnnotatedMethods(true)
+            .setFirebaseInstance(firebaseinstance)
+            .build()
+```
+### Step 3: Start Tracing
+```
+anrSpyAgent.start()
 ```
 
 ### Builder Methods
-#### setSpyListener()
+
+** setTimeOut(5000)**
+Time limit to detect ANR
+
+** setSpyListener()**
 Sets ANRSpyListener/callback methods
 
-#### setThrowException(true)
-Throws exception and close the app if true
+**setThrowException(true)**
+Convert possible ANR to crash to figure out the line where ANR may be possible and close the app if true. Default is false
 
-#### setTimeOut(5000)
-Time limit to detect ANR
+**enableReportAnnotatedMethods(true)**
+This will generate report for annotated methods that you want to trace any where in the app. If the specified methods touches main thread for more than target time (default 5 secs), it will trigger **onReportAvailable** method of the callback to get details about the function e.g. Thread Name, Elapsed Time on main thread and function
+Note: If the annotated method is not running on main thread then there will  be no report generated. 
+
+**setFirebaseInstance(firebaseinstance)**
+To get logs similar to the mention above on firebase.
+Just set the instance for firebase analytics and all events will be collected as usuall to other events.
+All the events will be prefixed with: ANR_SPY_  to differenciate from other events on firebase
+
+
+## Change Log
+**version 1.2 (beta)**
+1. Annotation added to trace a specific method for ANR
+2. Store annotated methods report in firebase analytics
+
+**version 1.0**
+Initial release
+
