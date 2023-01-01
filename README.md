@@ -25,7 +25,8 @@ implementation("io.github.farimarwat:anrspy:1.2")
     private var mCallback = object : ANRSpyListener {
         override fun onWait(ms: Long) {
 		//Total blocking time of main thread. 
-		//Can be used for doing any action e.g. if blocked time is more than 5 seconds then restart the app to avoid raising ANR message because it will lead to down rank your app.
+		//Can be used for doing any action e.g. if blocked time is more than 5 seconds then 
+		//restart the app to avoid raising ANR message because it will lead to down rank your app.
         }
 
         override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
