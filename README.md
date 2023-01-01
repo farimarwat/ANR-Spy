@@ -67,10 +67,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ### Builder Methods
 
-** setTimeOut(5000)**
+**setTimeOut(5000)**
 Time limit to detect ANR
 
-** setSpyListener()**
+**setSpyListener()**
 Sets ANRSpyListener/callback methods
 
 **setThrowException(true)**
