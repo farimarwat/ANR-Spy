@@ -15,7 +15,7 @@ Google recommends/suggests your app on play store. If your app raises too many A
 ### Implement:
 
 ```
-implementation("io.github.farimarwat:anrspy:1.2")
+implementation("io.github.farimarwat:anrspy:1.3")
 ```
 ## Usage
 
@@ -37,8 +37,19 @@ implementation("io.github.farimarwat:anrspy:1.2")
         override fun onReportAvailable(methodList: List<MethodModel>) {
 		//Get instant report about annotated methods if touches main thread more than target time
         }
-        override fun onAnrDetected(details: String, stackTrace: Array<StackTraceElement>) {
-		// Is triggered when ANR is detected
+        override fun onAnrDetected(
+            details: String,
+            stackTrace: Array<StackTraceElement>,
+            packageMethods: List<String>?
+        ) {
+           packageMethods?.let {
+	   //List of methods (bottom up) which cause anrs along with line number, filename and class
+               Log.e(TAG,"------------")
+               it.forEach {
+                   Log.e(TAG,it)
+               }
+               Log.e(TAG,"-------------------")
+           }
         }
     }
 ```
@@ -122,6 +133,10 @@ To trace a specific method on main thread for ANR
 **Note:** If the method is not running on main thread then there will be no report generated
 
 ## Change Log
+**version 1.3**
+1. Get details of methods which is related to main app package that causes anrs via "onAnrDetected" extra paramater
+2. A bug fixed (classnotfoundexception)
+
 **version 1.2 (beta)**
 1. Annotation added to trace a specific method for ANR
 2. Store annotated methods report in firebase analytics
