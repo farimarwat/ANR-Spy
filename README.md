@@ -42,14 +42,9 @@ implementation("io.github.farimarwat:anrspy:1.3")
             stackTrace: Array<StackTraceElement>,
             packageMethods: List<String>?
         ) {
-           packageMethods?.let {
-	   //List of methods (bottom up) which cause anrs along with line number, filename and class
-               Log.e(TAG,"------------")
-               it.forEach {
-                   Log.e(TAG,it)
-               }
-               Log.e(TAG,"-------------------")
-           }
+           //details: Short description about the detected anr
+	   //stacktrace: Stacktrace of the anr
+	   //packageMethod: methods hierarchy(bottom up) that causes anr (only if method is inside current app package name)
         }
     }
 ```
