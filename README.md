@@ -50,7 +50,7 @@ implementation("io.github.farimarwat:anrspy:1.3")
 ```
 ### Step 2: Create Instance
 ```
-val anrSpyAgent = ANRSpyAgent.Builder()
+val anrSpyAgent = ANRSpyAgent.Builder(this)
             .setTimeOut(5000)
             .setSpyListener(mCallback)
             .setThrowException(false)
@@ -101,7 +101,7 @@ All the events will be prefixed with: ANR_SPY_  to differenciate from other even
 In case if any one want to trace a specific method to trace then there are two types of annotations available:
 
 **1. @TraceClass(traceAllMethods = false)**
-This annotatiion is applied to a class and takes one perameter. If the peramater traceAllMethods is set to true then all methods of the class will be traced on main thread. Default is true
+This annotatiion is applied to a class and takes one parameter. If the paramater traceAllMethods is set to true then all methods of the class will be traced on main thread. Default is true
 
 **Note:** If **traceAllMethods** is set to **false** and there is no specific annotated method then there will be no report generated.
 To trace all methods in MainActivity:
