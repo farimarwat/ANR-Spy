@@ -8,7 +8,6 @@ import pk.farimarwat.anrspy.agent.TAG
 import pk.farimarwat.anrspy.annotations.TraceClass
 import pk.farimarwat.anrspy.annotations.TraceMethod
 
-@TraceClass(traceAllMethods = false)
 class MyService:Service() {
     @TraceMethod
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

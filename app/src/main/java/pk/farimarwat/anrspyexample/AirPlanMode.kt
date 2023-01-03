@@ -4,9 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import pk.farimarwat.anrspy.agent.TAG
 
-
+const val TAG = "ANR SPY"
 class AirPlanMode:BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         for(i in 0..10){
