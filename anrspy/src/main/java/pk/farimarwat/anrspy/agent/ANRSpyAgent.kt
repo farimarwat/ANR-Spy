@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.MessageQueue.IdleHandler
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.analytics.FirebaseAnalytics
 import pk.farimarwat.anrspy.annotations.TraceClass
@@ -95,6 +96,7 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
     override fun run() {
         while (!isInterrupted) {
             val stacktrace = Looper.getMainLooper().thread.stackTrace
+            isResumeExists(stacktrace)
             _timeWaited += INTERVAL
             mListener?.onWait(_timeWaited)
             mHandler.post(_mTesterWorker)
@@ -115,6 +117,20 @@ class ANRSpyAgent constructor(builder: Builder) : Thread() {
             }
         }
 
+    }
+
+    private fun isResumeExists(stacktrace: Array<StackTraceElement>) {
+//        val allstacks = getAllStackTraces()
+//        Log.w(TAG,"Threads------------")
+//        for(entity in allstacks){
+//            Log.e(TAG,"${entity.key}")
+//        }
+//        Log.w(TAG,"Threads------------\nn")
+        Log.w(TAG,"Threads------------\n")
+        for(item in stacktrace){
+            Log.e(TAG,"${item}")
+        }
+        Log.w(TAG,"Threads------------\n")
     }
 
     private fun throwException(stackTrace: Array<StackTraceElement>) {

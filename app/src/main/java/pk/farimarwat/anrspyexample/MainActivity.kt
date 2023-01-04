@@ -15,7 +15,7 @@ import pk.farimarwat.anrspy.models.MethodModel
 
 import pk.farimarwat.anrspyexample.databinding.ActivityMainBinding
 
-@TraceClass(traceAllMethods = false)
+
 class MainActivity : AppCompatActivity() {
     val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var mReceiver:AirPlanMode
@@ -23,13 +23,11 @@ class MainActivity : AppCompatActivity() {
     //Anr Callback
     private var mCallback = object : ANRSpyListener {
         override fun onWait(ms: Long) {
-            Log.e(TAG,"Waited: $ms")
-        }
 
+        }
         override fun onAnrStackTrace(stackstrace: Array<StackTraceElement>) {
 
         }
-
         override fun onReportAvailable(methodList: List<MethodModel>) {
             if(methodList.isNotEmpty()){
                 Log.e(TAG,"Methods-------")
@@ -46,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             packageMethods: List<String>?
         ) {
            packageMethods?.let {
-               Log.e(TAG,"------------")
+               Log.e(TAG,"-----ANR Detected-------")
                it.forEach {
                    Log.e(TAG,it)
                }
@@ -76,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         initGui()
     }
 
+
     fun initGui(){
         binding.btnMain.setOnClickListener {
             myLoop()
@@ -84,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             startService(Intent(this,MyService::class.java))
         }
     }
-    @TraceMethod
+
     fun myLoop(){
         for(i in 0..10){
             Thread.sleep(1000)
