@@ -3,6 +3,7 @@ package pk.farimarwat.anrspyexample
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import pk.farimarwat.anrspy.agent.ANRSpyAgent
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     //End
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Debug.startMethodTracing("my_profiler_data");
         setContentView(binding.root)
 
         //Firebase Analytics Instance
@@ -90,6 +92,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Debug.stopMethodTracing();
+    }
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(mReceiver)

@@ -1,6 +1,7 @@
 buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.14'
+        classpath "org.javassist:javassist:3.26.0-GA"
     }
 }
 plugins {
