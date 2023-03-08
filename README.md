@@ -67,6 +67,7 @@ val anrSpyAgent = ANRSpyAgent.Builder(this)
             .setFirebaseInstance(firebaseinstance)
             .build()
 ```
+
 ### Step 3: Start Tracing
 ```
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +80,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
 }
 
 ```
+
+**Note:Step 1, 2 and 3 can be done only once on either mainactivity or in appclass.There is not need to create seperate instances for each activity, viewmodel etc. This is thread based process and will be available in whole app.**
 
 ### Builder Methods
 
