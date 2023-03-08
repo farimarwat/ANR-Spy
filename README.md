@@ -13,6 +13,9 @@ Google recommends/suggests your app on play store. If your app raises too many A
 
 
 <h4><a href="https://www.youtube.com/watch?v=329yhbNjaHg">Video Tutorial </a></h4>
+
+**Note: Sample app is included in the project. Just clone the repo**
+
 ## Android ANR Spy Library
 ### Implement:
 
@@ -22,6 +25,8 @@ implementation("io.github.farimarwat:anrspy:1.3")
 ## Usage
 
 ### Step 1: Create a Callback Object
+
+(before onCreate() method)
 ```
  //Anr Callback
     private var mCallback = object : ANRSpyListener {
@@ -51,6 +56,8 @@ implementation("io.github.farimarwat:anrspy:1.3")
     }
 ```
 ### Step 2: Create Instance
+
+(before onCreate() method)
 ```
 val anrSpyAgent = ANRSpyAgent.Builder(this)
             .setTimeOut(5000)
