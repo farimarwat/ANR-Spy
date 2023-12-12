@@ -81,7 +81,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 ```
 
-**Note:Step 1, 2 and 3 can be done only once on either mainactivity or in appclass.There is not need to create seperate instances for each activity, viewmodel etc. This is thread based process and will be available in whole app.**
+**Note:Step 1, 2 and 3 can be done only once on either mainactivity or in appclass.There is no need to create seperate instances for each activity, viewmodel etc. This is thread based process and will be available in whole app.**
 
 ### Builder Methods
 
