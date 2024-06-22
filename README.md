@@ -1,6 +1,10 @@
 ### Android ANR Spy
 Android ANR Spy is the most simplest library that helps android developers to detect ANRs.
 
+### Features:
+1. Detect ANRs
+2. Get crash report in form of non-fatel exception for each function which is approaching ANR limit prior to occur ANR
+
 ### What is Android ANR (Application Not Responding)
 when a developer do most heavy jobs on UI thread (more than 5 seconds usually) and UI thread still receieve more request/events for doing a task then Android system raises ANR message. This is extremely bad effect on your app and may lead to the failure of your business.
 ### Android ANR does matter
