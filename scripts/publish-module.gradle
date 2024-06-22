@@ -34,7 +34,6 @@ afterEvaluate {
                     artifact("$buildDir/libs/${project.getName()}-${version}.jar")
                 }
 
-                artifact androidSourcesJar
 
                 // Mostly self-explanatory metadata
                 pom {
@@ -64,8 +63,10 @@ afterEvaluate {
                     }
                 }
             }
+
         }
     }
+    tasks.generateMetadataFileForReleasePublication.dependsOn androidSourcesJar
 }
 
 ext["signing.keyId"] = rootProject.ext["signing.keyId"]
