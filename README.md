@@ -42,7 +42,6 @@ val anrSpyAgent = ANRSpyAgent.Builder(this)
 
 ## Change Log
 **version 2.1**
-
 AppAction feature added
 
 
