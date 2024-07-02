@@ -24,25 +24,29 @@ Google recommends/suggests your app on play store. If your app raises too many A
 ### Implement:
 
 ```
-implementation("io.github.farimarwat:anrspy:2.0")
+implementation("io.github.farimarwat:anrspy:2.1")
 ```
 ## Usage
 ```
-    //CrashLytics Object to get non-fatel report
-  val crashlytics = FirebaseCrashlytics.getInstance()
-  
-  //Building spy agent
-  val anrSpyAgent = ANRSpyAgent.Builder(this )
-            .setTimeOut(3000) //Time out for ANR to be considered
-            .setTicker(500)   //Check interval. Keep this as minimum as possible, 200 ms will be best
-            .setThrowException(false) //Setting true will crash the app if time out limit exceeds
-            .setFirebaseCrashLytics(crashlytics) // setting crashlytics object
-            .build()
-        anrSpyAgent.start()
+// Initialize FirebaseCrashlytics
+val crashlyticsInstance = FirebaseCrashlytics.getInstance()
+
+// Create ANRSpyAgent
+val anrSpyAgent = ANRSpyAgent.Builder(this)
+    .setTimeOut(5000L) // Set timeout threshold (in milliseconds)
+    .setTicker(200L) // Set the interval at which the main thread is checked (in milliseconds)
+    .setFirebaseCrashLytics(crashlyticsInstance) // Set FirebaseCrashlytics instance
+    .setAppAction(AppAction.AppActionExit) // Set the action to perform when an ANR is detected
+    .build()
 ```
 
 ## Change Log
+**version 2.1**
+AppAction feature added
+
+
 **version 2.0**
+
 1. ANR detection with annotation method removed
 2. ANR detection algorithm changed
 3. A lot of extra functions removed

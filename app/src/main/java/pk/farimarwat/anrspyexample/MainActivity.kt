@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Debug
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import pk.farimarwat.anrspy.agent.ANRSpyAgent
+import pk.farimarwat.anrspy.models.AppAction
 
 import pk.farimarwat.anrspyexample.databinding.ActivityMainBinding
 
@@ -27,10 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         val crashlytics = FirebaseCrashlytics.getInstance()
         val anrSpyAgent = ANRSpyAgent.Builder(this )
-            .setTimeOut(3000)
-            .setTicker(100)
-            .setThrowException(true)
-            .setFirebaseCrashLytics(crashlytics)
+            .setTimeOut(3000) //How much time you consider it as anr
+            .setTicker(100) // check after this each interval in ms
+            .setFirebaseCrashLytics(crashlytics) // if set, it will log as non-fatel log in firebase
+            .setAppAction(AppAction.AppActionExit)
             .build()
         anrSpyAgent.start()
         initGui()
