@@ -43,8 +43,8 @@ val anrSpyAgent = ANRSpyAgent.Builder(this)
 ## Change Log
 **version 2.1**
 
-throwException method removed
-AppAction feature added
+- throwException method removed
+- AppAction feature added
 
 
 **version 2.0**
