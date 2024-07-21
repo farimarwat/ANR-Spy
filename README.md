@@ -1,9 +1,10 @@
 ### Android ANR Spy
-Android ANR Spy is the most simplest library that helps android developers to detect ANRs.
+Android ANR Spy is the most simplest library that helps android developers to detect ANRs. The ANRspy library helps in detecting and reporting Application Not Responding (ANR) issues in Android applications. It provides integration with Firebase Crashlytics for reporting and allows setting custom actions when an ANR is detected.
 
 ### Features
 1. Detect ANR
-2. Detect a function which is approaching ANR limit and send report to firebase prior to ANR occurrence. 
+2. Detect a function which is approaching ANR limit and send report to firebase prior to ANR occurrence.
+3. Prevent from downranking your app on google play console by exiting app prior to anr occurance. 
 
 ### What is Android ANR (Application Not Responding)
 when a developer do most heavy jobs on UI thread (more than 5 seconds usually) and UI thread still receieve more request/events for doing a task then Android system raises ANR message. This is extremely bad effect on your app and may lead to the failure of your business.
@@ -39,6 +40,13 @@ val anrSpyAgent = ANRSpyAgent.Builder(this)
     .setAppAction(AppAction.AppActionExit) // Set the action to perform when an ANR is detected
     .build()
 ```
+
+### Tips
+#### Firebase Integration:
+By setting up FirebaseCrashlytics, you will receive reports in the form of fatal exceptions (not ANR/crash). This means if any function is approaching the ANR limit, a report will be sent to Firebase. This can help in identifying potential ANR issues before they cause a crash.
+
+#### Preventing ANR Reports to Google Play Console:
+By setting an app action such as AppAction.AppActionExit, the library will prevent ANR from being reported to the Google Play Console by exiting the application before the ANR occurs.
 
 ## Change Log
 **version 2.1**
