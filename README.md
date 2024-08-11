@@ -1,3 +1,6 @@
+## This library has been deprecated. Now use <a href="https://github.com/farimarwat/grizzly">Grizzly</a>
+
+
 ### Android ANR Spy
 Android ANR Spy is the most simplest library that helps android developers to detect ANRs. The ANRspy library helps in detecting and reporting Application Not Responding (ANR) issues in Android applications. It provides integration with Firebase Crashlytics for reporting and allows setting custom actions when an ANR is detected.
 
